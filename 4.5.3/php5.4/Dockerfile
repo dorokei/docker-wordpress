@@ -1,4 +1,4 @@
-FROM php:5.6-apache
+FROM php:5.4-apache
 
 # install the PHP extensions we need
 RUN set -ex; \
@@ -29,8 +29,8 @@ RUN a2enmod rewrite expires
 
 VOLUME /var/www/html
 
-ENV WORDPRESS_VERSION 4.7.3
-ENV WORDPRESS_SHA1 35adcd8162eae00d5bc37f35344fdc06b22ffc98
+ENV WORDPRESS_VERSION 4.5.3
+ENV WORDPRESS_SHA1 835b68748dae5a9d31c059313cd0150f03a49269
 
 RUN set -ex; \
 	curl -o wordpress.tar.gz -fSL "https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz"; \
@@ -41,6 +41,7 @@ RUN set -ex; \
 	chown -R www-data:www-data /usr/src/wordpress
 
 COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["apache2-foreground"]
